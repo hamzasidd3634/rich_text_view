@@ -14,6 +14,7 @@ class RichTextEditor extends StatefulWidget {
   final TextAlign textAlign;
   final TextStyle? style;
   final bool autoFocus;
+  final bool expands;
   final TextEditingController? controller;
   final InputDecoration? decoration;
   final Function(String)? onChanged;
@@ -23,6 +24,7 @@ class RichTextEditor extends StatefulWidget {
   final FocusNode? focusNode;
   final bool readOnly;
   final TextDirection? textDirection;
+  final TextInputType? textInputType;
   final List<TextInputFormatter>? inputFormatters;
   final TextAlignVertical? textAlignVertical;
   final EdgeInsetsGeometry padding;
@@ -47,12 +49,14 @@ class RichTextEditor extends StatefulWidget {
       this.controller,
       this.decoration,
       this.onChanged,
+      this.textInputType = TextInputType.text,
       this.autoFocus = false,
       this.maxLength,
       this.minLines,
       this.keyboardType,
       this.focusNode,
       this.readOnly = false,
+      this.expands = false,
       this.suggestionController,
       this.textInputAction,
       this.textDirection,
@@ -112,6 +116,7 @@ class _RichTextEditorState extends State<RichTextEditor> {
               searchItemWidget,
             TextFormField(
               style: widget.style,
+              expands: widget.expands,
               focusNode: widget.focusNode,
               controller: controller,
               textCapitalization: TextCapitalization.sentences,
