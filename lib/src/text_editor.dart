@@ -20,6 +20,7 @@ class RichTextEditor extends StatefulWidget {
   final Function(String)? onChanged;
   final int? maxLength;
   final int? minLines;
+  final Color? suggestionColor;
   final TextInputType? keyboardType;
   final FocusNode? focusNode;
   final bool readOnly;
@@ -55,6 +56,7 @@ class RichTextEditor extends StatefulWidget {
       this.minLines,
       this.keyboardType,
       this.focusNode,
+      this.suggestionColor,
       this.readOnly = false,
       this.expands = false,
       this.suggestionController,
@@ -102,6 +104,7 @@ class _RichTextEditorState extends State<RichTextEditor> {
       var searchItemWidget = SearchItemWidget(
           suggestionController: suggestionController,
           controller: controller,
+          suggestionColor: widget.suggestionColor,
           onTap: (contrl) {
             setState(() {
               controller = contrl;

@@ -4,11 +4,13 @@ import 'package:rich_text_view/rich_text_view.dart';
 class SearchItemWidget extends StatelessWidget {
   final SuggestionController suggestionController;
   final TextEditingController? controller;
+  final Color? suggestionColor;
   final Function(TextEditingController)? onTap;
 
   SearchItemWidget({
     required this.suggestionController,
     this.controller,
+    this.suggestionColor,
     this.onTap,
   });
 
@@ -18,7 +20,7 @@ class SearchItemWidget extends StatelessWidget {
     var border = BorderSide(
         width: Theme.of(context).brightness == Brightness.dark ? 0.1 : 1.0,
         color: state.suggestionHeight > 1
-            ? Colors.grey[200]!
+            ? suggestionColor ?? Colors.grey[200]!
             : Colors.transparent);
     return Container(
         constraints: BoxConstraints(
