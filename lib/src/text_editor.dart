@@ -15,6 +15,7 @@ class RichTextEditor extends StatefulWidget {
   final TextStyle? style;
   final bool autoFocus;
   final bool expands;
+  final bool fromPost;
   final TextEditingController? controller;
   final InputDecoration? decoration;
   final Function(String)? onChanged;
@@ -52,6 +53,7 @@ class RichTextEditor extends StatefulWidget {
       this.onChanged,
       this.textInputType = TextInputType.text,
       this.autoFocus = false,
+      this.fromPost = false,
       this.maxLength,
       this.minLines,
       this.keyboardType,
@@ -112,44 +114,80 @@ class _RichTextEditorState extends State<RichTextEditor> {
           });
       return Padding(
         padding: widget.padding,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            if (suggestionController.position == SuggestionPosition.top)
-              searchItemWidget,
-            TextFormField(
-              style: widget.style,
-              expands: widget.expands,
-              focusNode: widget.focusNode,
-              controller: controller,
-              textCapitalization: TextCapitalization.sentences,
-              readOnly: widget.readOnly,
-              textDirection: widget.textDirection,
-              textInputAction: widget.textInputAction,
-              onChanged: (val) async {
-                widget.onChanged?.call(val);
-                suggestionController
-                    .onChanged(val.split(' ').last.toLowerCase());
-              },
-              maxLines: widget.maxLines,
-              keyboardType: widget.keyboardType,
-              maxLength: widget.maxLength,
-              minLines: widget.minLines,
-              autofocus: widget.autoFocus,
-              maxLengthEnforcement: MaxLengthEnforcement.enforced,
-              decoration: widget.decoration,
-              textAlign: widget.textAlign,
-              onFieldSubmitted: widget.onFieldSubmitted,
-              inputFormatters: widget.inputFormatters,
-              textAlignVertical: widget.textAlignVertical,
-              onEditingComplete: widget.onEditingComplete,
-              validator: widget.validator,
-              onSaved: widget.onSaved,
-            ),
-            if (suggestionController.position == SuggestionPosition.bottom)
-              searchItemWidget,
-          ],
-        ),
+        child: widget.fromPost == true
+            ? Stack(
+                children: [
+                  TextFormField(
+                    style: widget.style,
+                    expands: widget.expands,
+                    focusNode: widget.focusNode,
+                    controller: controller,
+                    textCapitalization: TextCapitalization.sentences,
+                    readOnly: widget.readOnly,
+                    textDirection: widget.textDirection,
+                    textInputAction: widget.textInputAction,
+                    onChanged: (val) async {
+                      widget.onChanged?.call(val);
+                      suggestionController
+                          .onChanged(val.split(' ').last.toLowerCase());
+                    },
+                    maxLines: widget.maxLines,
+                    keyboardType: widget.keyboardType,
+                    maxLength: widget.maxLength,
+                    minLines: widget.minLines,
+                    autofocus: widget.autoFocus,
+                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                    decoration: widget.decoration,
+                    textAlign: widget.textAlign,
+                    onFieldSubmitted: widget.onFieldSubmitted,
+                    inputFormatters: widget.inputFormatters,
+                    textAlignVertical: widget.textAlignVertical,
+                    onEditingComplete: widget.onEditingComplete,
+                    validator: widget.validator,
+                    onSaved: widget.onSaved,
+                  ),
+                  Positioned(bottom: 5, child: searchItemWidget)
+                ],
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  if (suggestionController.position == SuggestionPosition.top)
+                    searchItemWidget,
+                  TextFormField(
+                    style: widget.style,
+                    expands: widget.expands,
+                    focusNode: widget.focusNode,
+                    controller: controller,
+                    textCapitalization: TextCapitalization.sentences,
+                    readOnly: widget.readOnly,
+                    textDirection: widget.textDirection,
+                    textInputAction: widget.textInputAction,
+                    onChanged: (val) async {
+                      widget.onChanged?.call(val);
+                      suggestionController
+                          .onChanged(val.split(' ').last.toLowerCase());
+                    },
+                    maxLines: widget.maxLines,
+                    keyboardType: widget.keyboardType,
+                    maxLength: widget.maxLength,
+                    minLines: widget.minLines,
+                    autofocus: widget.autoFocus,
+                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                    decoration: widget.decoration,
+                    textAlign: widget.textAlign,
+                    onFieldSubmitted: widget.onFieldSubmitted,
+                    inputFormatters: widget.inputFormatters,
+                    textAlignVertical: widget.textAlignVertical,
+                    onEditingComplete: widget.onEditingComplete,
+                    validator: widget.validator,
+                    onSaved: widget.onSaved,
+                  ),
+                  if (suggestionController.position ==
+                      SuggestionPosition.bottom)
+                    searchItemWidget,
+                ],
+              ),
       );
     });
   }
