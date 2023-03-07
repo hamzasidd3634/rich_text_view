@@ -22,6 +22,7 @@ class RichTextEditor extends StatefulWidget {
   final int? maxLength;
   final int? minLines;
   final Color? suggestionColor;
+  final Color? backgroundColor;
   final TextInputType? keyboardType;
   final FocusNode? focusNode;
   final bool readOnly;
@@ -62,6 +63,7 @@ class RichTextEditor extends StatefulWidget {
       this.readOnly = false,
       this.expands = false,
       this.suggestionController,
+      this.backgroundColor = Colors.white,
       this.textInputAction,
       this.textDirection,
       this.onEditingComplete,
@@ -106,6 +108,7 @@ class _RichTextEditorState extends State<RichTextEditor> {
       var searchItemWidget = SearchItemWidget(
           suggestionController: suggestionController,
           controller: controller,
+          backgroundColor: widget.backgroundColor,
           suggestionColor: widget.suggestionColor,
           onTap: (contrl) {
             setState(() {
@@ -115,40 +118,78 @@ class _RichTextEditorState extends State<RichTextEditor> {
       return Padding(
         padding: widget.padding,
         child: widget.fromPost == true
-            ? Stack(
-                children: [
-                  TextFormField(
-                    style: widget.style,
-                    expands: widget.expands,
-                    focusNode: widget.focusNode,
-                    controller: controller,
-                    textCapitalization: TextCapitalization.sentences,
-                    readOnly: widget.readOnly,
-                    textDirection: widget.textDirection,
-                    textInputAction: widget.textInputAction,
-                    onChanged: (val) async {
-                      widget.onChanged?.call(val);
-                      suggestionController
-                          .onChanged(val.split(' ').last.toLowerCase());
-                    },
-                    maxLines: widget.maxLines,
-                    keyboardType: widget.keyboardType,
-                    maxLength: widget.maxLength,
-                    minLines: widget.minLines,
-                    autofocus: widget.autoFocus,
-                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                    decoration: widget.decoration,
-                    textAlign: widget.textAlign,
-                    onFieldSubmitted: widget.onFieldSubmitted,
-                    inputFormatters: widget.inputFormatters,
-                    textAlignVertical: widget.textAlignVertical,
-                    onEditingComplete: widget.onEditingComplete,
-                    validator: widget.validator,
-                    onSaved: widget.onSaved,
-                  ),
-                  Positioned(bottom: 5, child: searchItemWidget)
-                ],
-              )
+            ? widget.maxLines == 8
+                ? Stack(
+                    children: [
+                      TextFormField(
+                        style: widget.style,
+                        expands: widget.expands,
+                        focusNode: widget.focusNode,
+                        controller: controller,
+                        textCapitalization: TextCapitalization.sentences,
+                        readOnly: widget.readOnly,
+                        textDirection: widget.textDirection,
+                        textInputAction: widget.textInputAction,
+                        onChanged: (val) async {
+                          widget.onChanged?.call(val);
+                          suggestionController
+                              .onChanged(val.split(' ').last.toLowerCase());
+                        },
+                        maxLines: widget.maxLines,
+                        keyboardType: widget.keyboardType,
+                        maxLength: widget.maxLength,
+                        minLines: widget.minLines,
+                        autofocus: widget.autoFocus,
+                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                        decoration: widget.decoration,
+                        textAlign: widget.textAlign,
+                        onFieldSubmitted: widget.onFieldSubmitted,
+                        inputFormatters: widget.inputFormatters,
+                        textAlignVertical: widget.textAlignVertical,
+                        onEditingComplete: widget.onEditingComplete,
+                        validator: widget.validator,
+                        onSaved: widget.onSaved,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: kToolbarHeight),
+                        child: searchItemWidget,
+                      )
+                    ],
+                  )
+                : Column(
+                    children: [
+                      TextFormField(
+                        style: widget.style,
+                        expands: widget.expands,
+                        focusNode: widget.focusNode,
+                        controller: controller,
+                        textCapitalization: TextCapitalization.sentences,
+                        readOnly: widget.readOnly,
+                        textDirection: widget.textDirection,
+                        textInputAction: widget.textInputAction,
+                        onChanged: (val) async {
+                          widget.onChanged?.call(val);
+                          suggestionController
+                              .onChanged(val.split(' ').last.toLowerCase());
+                        },
+                        maxLines: widget.maxLines,
+                        keyboardType: widget.keyboardType,
+                        maxLength: widget.maxLength,
+                        minLines: widget.minLines,
+                        autofocus: widget.autoFocus,
+                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                        decoration: widget.decoration,
+                        textAlign: widget.textAlign,
+                        onFieldSubmitted: widget.onFieldSubmitted,
+                        inputFormatters: widget.inputFormatters,
+                        textAlignVertical: widget.textAlignVertical,
+                        onEditingComplete: widget.onEditingComplete,
+                        validator: widget.validator,
+                        onSaved: widget.onSaved,
+                      ),
+                      searchItemWidget
+                    ],
+                  )
             : Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

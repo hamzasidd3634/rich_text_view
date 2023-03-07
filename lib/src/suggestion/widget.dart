@@ -5,41 +5,45 @@ class SearchItemWidget extends StatelessWidget {
   final SuggestionController suggestionController;
   final TextEditingController? controller;
   final Color? suggestionColor;
+  final Color? backgroundColor;
   final Function(TextEditingController)? onTap;
 
   SearchItemWidget({
     required this.suggestionController,
     this.controller,
     this.suggestionColor,
+    this.backgroundColor,
     this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     var state = suggestionController.state;
-    var border = BorderSide(
-        width: Theme.of(context).brightness == Brightness.dark ? 0.1 : 1.0,
-        color: state.suggestionHeight > 1
-            ? suggestionColor ?? Colors.grey[200]!
-            : Colors.transparent);
+    // var border = BorderSide(
+    //     width: Theme.of(context).brightness == Brightness.dark ? 0.1 : 1.0,
+    //     color:
+    //         state.suggestionHeight > 1 ? suggestionColor! : Colors.transparent);
     return Container(
         constraints: BoxConstraints(
-          minHeight: 1,
+          minHeight: 0,
           maxHeight: state.suggestionHeight,
           maxWidth: double.infinity,
           minWidth: double.infinity,
         ),
         decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            border: Border(
-              top: suggestionController.position == SuggestionPosition.top &&
-                      state.suggestionHeight > 1.0
-                  ? border
-                  : BorderSide.none,
-              left: border,
-              right: border,
-              bottom: border,
-            )),
+          color: state.suggestionHeight == 1
+              ? Colors.transparent
+              : backgroundColor,
+          // border: Border(
+          //   top: suggestionController.position == SuggestionPosition.top &&
+          //           state.suggestionHeight > 1.0
+          //       ? border
+          //       : BorderSide.none,
+          //   left: border,
+          //   right: border,
+          //   bottom: border,
+          // )
+        ),
         child: state.loading
             ? Padding(
                 padding: EdgeInsets.symmetric(vertical: 20),
@@ -53,6 +57,8 @@ class SearchItemWidget extends StatelessWidget {
                 thickness: 3,
                 child: state.last.startsWith(suggestionController.mentionSymbol)
                     ? ListView.builder(
+                        padding: EdgeInsets.zero,
+                        physics: AlwaysScrollableScrollPhysics(),
                         itemCount: state.mentions.length,
                         itemBuilder: (context, index) {
                           var mention = state.mentions[index];
@@ -71,6 +77,7 @@ class SearchItemWidget extends StatelessWidget {
                                     ?.call(mention) ??
                                 ListUserItem(
                                   title: mention.title,
+                                  backgroundColor: backgroundColor!,
                                   subtitle: mention.subtitle,
                                   imageUrl: mention.imageURL,
                                 ),
@@ -79,6 +86,8 @@ class SearchItemWidget extends StatelessWidget {
                       )
                     : state.hashtags.isNotEmpty
                         ? ListView.builder(
+                            padding: EdgeInsets.zero,
+                            physics: AlwaysScrollableScrollPhysics(),
                             itemBuilder: (context, position) {
                               var item = state.hashtags[position];
                               return InkWell(
@@ -116,17 +125,19 @@ class ListUserItem extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String subtitle;
+  final Color backgroundColor;
 
   ListUserItem(
       {Key? key,
       required this.imageUrl,
+      required this.backgroundColor,
       required this.title,
       required this.subtitle});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
       child: Row(children: <Widget>[
         CircleAvatar(
           backgroundImage: NetworkImage(imageUrl),
@@ -142,10 +153,11 @@ class ListUserItem extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     title.trim(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(fontWeight: FontWeight.w600),
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: backgroundColor == Colors.white
+                            ? Colors.black
+                            : Colors.white),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ],
