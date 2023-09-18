@@ -26,6 +26,9 @@ class RichTextEditor extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextAlignVertical? textAlignVertical;
   final EdgeInsetsGeometry padding;
+    final EdgeInsets? paddingSuggestion;
+  final EdgeInsets? margin;
+  final double radius;
 
   ///A controller for the suggestion behaviour and customisations.
   /// You can as well extend this controller for a more custom behaviour.
@@ -46,6 +49,9 @@ class RichTextEditor extends StatefulWidget {
       this.style,
       this.controller,
       this.decoration,
+            this.paddingSuggestion,
+    this.margin,
+    this.radius =20,
       this.onChanged,
       this.autoFocus = false,
       this.maxLength,
@@ -98,6 +104,9 @@ class _RichTextEditorState extends State<RichTextEditor> {
       var searchItemWidget = SearchItemWidget(
           suggestionController: suggestionController,
           controller: controller,
+          padding:widget.paddingSuggestion,
+          margin:widget.margin,
+          radius:widget.radius,
           onTap: (contrl) {
             setState(() {
               controller = contrl;

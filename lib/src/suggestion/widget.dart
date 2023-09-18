@@ -5,11 +5,16 @@ class SearchItemWidget extends StatelessWidget {
   final SuggestionController suggestionController;
   final TextEditingController? controller;
   final Function(TextEditingController)? onTap;
-
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
+  final double radius;
   SearchItemWidget({
     required this.suggestionController,
     this.controller,
     this.onTap,
+    this.padding,
+    this.margin,
+    this.radius =20,
   });
 
   @override
@@ -71,6 +76,9 @@ class SearchItemWidget extends StatelessWidget {
                                   title: mention.title,
                                   subtitle: mention.subtitle,
                                   imageUrl: mention.imageURL,
+                                    padding:padding,
+                                    margin:margin,
+                                    radius:radius,
                                 ),
                           );
                         },
@@ -114,25 +122,33 @@ class ListUserItem extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String subtitle;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
+  final double radius;
+
 
   ListUserItem(
       {Key? key,
       required this.imageUrl,
+      this.padding,
+      this.margin,
+      this.radius =20,
       required this.title,
+
       required this.subtitle});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
+      padding:padding?? const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
       child: Row(children: <Widget>[
         CircleAvatar(
           backgroundImage: NetworkImage(imageUrl),
-          radius: 20,
+          radius: radius,
         ),
         Flexible(
             child: Container(
-          margin: EdgeInsets.only(left: 20.0, top: 8),
+          margin:margin?? EdgeInsets.only(left: 20.0, top: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
