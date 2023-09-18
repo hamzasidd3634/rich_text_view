@@ -155,7 +155,7 @@ class ListUserItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+      padding:padding?? const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
       child: Row(children: <Widget>[
         CircleAvatar(
           backgroundImage: NetworkImage(imageUrl),
@@ -163,7 +163,7 @@ class ListUserItem extends StatelessWidget {
         ),
         Flexible(
             child: Container(
-              margin: EdgeInsets.only(left: 20.0, top: 8),
+              margin:margin?? EdgeInsets.only(left: 20.0, top: 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
