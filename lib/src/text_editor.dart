@@ -45,7 +45,10 @@ class RichTextEditor extends StatefulWidget {
   final String? Function(String?)? validator;
 
   final TextInputAction? textInputAction;
-
+  final double horizontalPadding;
+  final double verticalPadding;
+  final double leftPadding;
+  final bool isImage;
   const RichTextEditor(
       {Key? key,
       this.initialValue,
@@ -78,6 +81,10 @@ class RichTextEditor extends StatefulWidget {
       this.onFieldSubmitted,
       this.onSaved,
       this.validator,
+        this.horizontalPadding = 20,
+        this.verticalPadding = 10,
+        this.leftPadding = 10,
+        this.isImage = true,
       this.padding = const EdgeInsets.only(top: 16.0)})
       : super(key: key);
 
@@ -119,6 +126,10 @@ class _RichTextEditorState extends State<RichTextEditor> {
           padding: widget.paddingSuggestion,
           margin: widget.margin,
           radius: widget.radius,
+          horizontalPadding: widget.horizontalPadding,
+          verticalPadding: widget.verticalPadding,
+          leftPadding: widget.leftPadding,
+          isImage: widget.isImage,
           onTap: (contrl) {
             setState(() {
               controller = contrl;

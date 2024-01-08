@@ -11,6 +11,10 @@ class SearchItemWidget extends StatelessWidget {
   final EdgeInsets? padding;
   final EdgeInsets? margin;
   final double radius;
+  final double horizontalPadding;
+  final double verticalPadding;
+  final double leftPadding;
+  final bool isImage;
   SearchItemWidget({
     required this.suggestionController,
     this.controller,
@@ -19,7 +23,10 @@ class SearchItemWidget extends StatelessWidget {
     this.onTap,        this.padding,
     this.margin,
     this.radius =20,
-
+    this.horizontalPadding = 20,
+    this.verticalPadding = 10,
+    this.leftPadding = 10,
+    this.isImage = true,
 
   });
 
@@ -90,6 +97,10 @@ class SearchItemWidget extends StatelessWidget {
                       padding: padding,
                       radius: radius,
                       margin: margin,
+                      horizontalPadding: horizontalPadding,
+                      verticalPadding: verticalPadding,
+                      leftPadding: leftPadding,
+                      isImage: isImage,
                     ),
               );
             },
@@ -136,6 +147,10 @@ class ListUserItem extends StatelessWidget {
   final String title;
   final String subtitle;
   final Color backgroundColor;
+  final double horizontalPadding;
+  final double verticalPadding;
+  final double leftPadding;
+  final bool isImage;
 
   ListUserItem(
       {Key? key,
@@ -145,6 +160,10 @@ class ListUserItem extends StatelessWidget {
         required this.subtitle,
         this.padding,
         this.margin,
+        this.horizontalPadding = 20,
+        this.verticalPadding = 10,
+        this.leftPadding = 10,
+        this.isImage = true,
         this.radius =20,
       });
   final EdgeInsets? padding;
@@ -157,7 +176,7 @@ class ListUserItem extends StatelessWidget {
     return Padding(
       padding:padding?? const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
       child: Row(children: <Widget>[
-        CircleAvatar(
+        isImage == false?Container():   CircleAvatar(
           backgroundImage: NetworkImage(imageUrl),
           radius: radius,
         ),
