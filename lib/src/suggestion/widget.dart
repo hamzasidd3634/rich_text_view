@@ -128,7 +128,7 @@ class SearchItemWidget extends StatelessWidget {
                             item.hashtag,
                             style: Theme.of(context)
                                 .textTheme
-                                .subtitle2,
+                                .titleSmall,
                           ),
                           subtitle: Text(item.subtitle ?? ''),
                           trailing: item.trending
@@ -190,7 +190,7 @@ class ListUserItem extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         title.trim(),
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             fontWeight: FontWeight.w600,
                             color: backgroundColor == Colors.white
                                 ? Colors.black
@@ -207,7 +207,7 @@ class ListUserItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
                               .textTheme
-                              .caption!
+                              .bodySmall!
                               .copyWith(fontSize: 14),
                         )),
                   ),
